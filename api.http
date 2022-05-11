@@ -1,15 +1,18 @@
 #GET TASKS
 http://localhost:3000/tasks
+Authorization: Bearer {{$dotenv %TESTING_KEY}}
 
 ###
 
 #GET TASK BY ID
 http://localhost:3000/tasks/627447acd07a3d9eee0e9c31
+Authorization: Bearer 
 
 ###
 
 #POST TASK
 POST http://localhost:3000/tasks HTTP/1.1
+Authorization: Bearer
 content-type: application/json
 
 {
@@ -25,10 +28,11 @@ content-type: application/json
 
 #UPDATE TASK BY ID
 PUT http://localhost:3000/tasks/627447acd07a3d9eee0e9c31
+Authorization: Bearer
 content-type: application/json
 
 {
-    "title": "testing API"
+    "title": "testing AUUUTHHH"
 }
 
 ###

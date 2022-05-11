@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { newDbError, okResponse } from '../utils.js'
+import { newError, okResponse, formatMongoError } from '../utils.js'
 import * as db from '../database/tasks.js'
 
 const router = Router()
@@ -8,7 +8,7 @@ const router = Router()
  router.get("/", (req, res, next) => {
     db.getTasks()
         .then(data => res.status(200).json(data))
-        .catch(err => next(newDbError(err, "Could not get tasks")))
+        .catch(err => next(newError(formatMongoError(err), "Could not get tasks")))
 })
 
 /* GET TASK BY ID */
@@ -18,16 +18,16 @@ router.get("/:id", (req, res, next) => {
             if(data)
                 res.status(200).json(data)
             else
-                throw new Error("Not found")
+                throw new Error("Not found for get operation")
         })
-        .catch(err => next(newDbError(err, "Could not get task with id " + req.params.id)))
+        .catch(err => next(newError(formatMongoError(err), "Could not get task with id " + req.params.id)))
 })
 
 /* POST TASK */
 router.post("/", (req, res, next) => {
     db.postTask(req.body)
         .then(() => res.status(200).json(okResponse))
-        .catch(err => next(newDbError(err, "Could not post task")))
+        .catch(err => next(newError(formatMongoError(err), "Could not post task")))
 })
 
 /* UPDATE TASK */
@@ -39,7 +39,7 @@ router.put("/:id", (req, res, next) => {
             else
                 throw new Error("Not found for update")
         })
-        .catch(err => next(newDbError(err, "Could not update task with id " + req.params.id)))
+        .catch(err => next(newError(formatMongoError(err), "Could not update task with id " + req.params.id)))
 })
 
 /* DELETE TASK */
@@ -51,7 +51,7 @@ router.delete("/:id", (req, res, next) => {
             else
                 throw new Error("Not found for deletion")
         })
-        .catch(err => next(newDbError(err, "Could not delete task with id " + req.params.id)))
+        .catch(err => next(newError(formatMongoError(err), "Could not delete task with id " + req.params.id)))
 })
 
 export default router

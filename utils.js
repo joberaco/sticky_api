@@ -1,21 +1,32 @@
 /** Generic response for successful transaction */
 const okResponse = {ok: "success"}
 
-/** Custom json error for api responses */
-function errorResponse(msg) {
-    return {error: msg}
+/** Custom json error + status for api responses */
+function errorResponse(msg, status) {
+    return {json: {error: msg}, status: status}
 }
 
-/** Custom DB throw error for middleware next()
- * @param {string} err detailed error string from mongo for internal loggers
+/** Custom throw error for middleware next()
+ * @param {string} err detailed error string for internal loggers
  * @param {string} text custom error string for api responses (external)
+ * @param {string} status error status (default: 500)
 */
-function newDbError(err, text) {
-    return {dbError: err, displayText: text}
+function newError(err, text, status = 500) {
+    return {internalError: err, displayText: text, status: status}
+}
+
+function formatMongoError(err) {
+    return "[MongoDB]: " + err;
+}
+
+function formatAuthError(err) {
+    return "[Auth]: " + err;
 }
 
 export {
     okResponse,
     errorResponse,
-    newDbError
+    newError,
+    formatMongoError,
+    formatAuthError
 }
