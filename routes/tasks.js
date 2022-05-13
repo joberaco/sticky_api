@@ -34,7 +34,7 @@ router.post("/", (req, res, next) => {
 router.put("/:id", (req, res, next) => {
     db.updateTask(req.params.id, req.body)
         .then(data => {
-            if(data.acknowledged && data.modifiedCount > 0)
+            if(data.acknowledged)
                 res.status(200).json(okResponse)
             else
                 throw new Error("Not found for update")

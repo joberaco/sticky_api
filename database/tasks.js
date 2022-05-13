@@ -21,11 +21,7 @@ async function postTask(task) {
     const db = await getDB();
     let newTask = task
 
-    /*date formatting*/
-    formatDates(newTask)
-
-    /* bson ObjectID fromatting */
-    if(newTask._id) newTask._id = toObjectId(newTask._id)
+    formatToValidInput(task)
 
     return await db.collection(collectionName).insertOne(newTask)
 }
@@ -35,8 +31,8 @@ async function updateTask(id, data) {
     const db = await getDB();
     let idQuery = {_id: toObjectId(id)};
 
-    /*date formatting*/
-    formatDates(data)
+    formatToValidInput(data)
+
     let updateQuery = { $set: data }
     
     return await db.collection(collectionName).updateOne(idQuery, updateQuery)
@@ -56,6 +52,17 @@ function formatDates(task) {
         task.start_time = new Date (task.start_time)
     if(task.end_time)
         task.end_time = new Date (task.end_time)
+}
+
+/* Convert to valid input json */
+function formatToValidInput(task) { 
+    formatDates(task);
+    /* filter out inmutable field _id*/
+    if(task._id)
+        delete task._id;
+     /* hour string conversion if necessary */
+     if(task.hour_estimate)
+        task.hour_estimate = task.hour_estimate.toString();
 }
 
 export {

@@ -13,7 +13,7 @@ app.use(express.json())
 app.use(bodyParser.json())
 app.use(bodyParser.raw())
 app.use(cors())
-app.use(checkJwt)
+//app.use(checkJwt)
 
 /* API ENDPOINTS */
 app.use('/tasks', routes.tasks)

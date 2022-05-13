@@ -1,26 +1,26 @@
 #GET TASKS
 http://localhost:3000/tasks
-Authorization: Bearer {{$dotenv %TESTING_KEY}}
+#Authorization: Bearer {{$dotenv %TESTING_KEY}}
 
 ###
 
 #GET TASK BY ID
 http://localhost:3000/tasks/627447acd07a3d9eee0e9c31
-Authorization: Bearer 
+#Authorization: Bearer 
 
 ###
 
 #POST TASK
 POST http://localhost:3000/tasks HTTP/1.1
-Authorization: Bearer
 content-type: application/json
+#Authorization: Bearer
 
 {
-    "title": "testing yet more MODULARITY",
+    "title": "testing hourss",
     "notes": ":(((",
     "start_time": "2023-06-25T12:00:00.000Z",
     "end_time": "2023-07-28T12:30:00.000Z",
-    "hour_estimate": "3000",
+    "hour_estimate": 2,
     "completed": false
 }
 
@@ -28,11 +28,12 @@ content-type: application/json
 
 #UPDATE TASK BY ID
 PUT http://localhost:3000/tasks/627447acd07a3d9eee0e9c31
-Authorization: Bearer
 content-type: application/json
+#Authorization: Bearer
 
 {
-    "title": "testing AUUUTHHH"
+    "_id": "asd",
+    "title": "testing OAuth"
 }
 
 ###
